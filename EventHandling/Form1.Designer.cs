@@ -34,6 +34,7 @@ namespace EventHandling
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.Log = new System.Windows.Forms.RichTextBox();
             this.score = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,24 +56,34 @@ namespace EventHandling
             // 
             // Log
             // 
-            this.Log.Location = new System.Drawing.Point(794, 12);
+            this.Log.Location = new System.Drawing.Point(794, 46);
             this.Log.Name = "Log";
-            this.Log.Size = new System.Drawing.Size(240, 416);
+            this.Log.Size = new System.Drawing.Size(240, 382);
             this.Log.TabIndex = 1;
             this.Log.Text = "";
             // 
             // score
             // 
-            this.score.Location = new System.Drawing.Point(794, 13);
+            this.score.Location = new System.Drawing.Point(881, 13);
             this.score.Name = "score";
-            this.score.Size = new System.Drawing.Size(125, 27);
+            this.score.Size = new System.Drawing.Size(153, 27);
             this.score.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(805, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 20);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Очки";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1046, 450);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.score);
             this.Controls.Add(this.Log);
             this.Controls.Add(this.pbMain);
@@ -90,6 +101,7 @@ namespace EventHandling
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.RichTextBox Log;
         private System.Windows.Forms.TextBox score;
+        private System.Windows.Forms.Label label1;
     }
 }
 

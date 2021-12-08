@@ -18,6 +18,7 @@ namespace EventHandling
         Player player;
         Marker marker;
         Buff bust;
+        Shadow sh;
         byte speed = 2;
         bool bustTrecker = false;
         int scoreCount=0;
@@ -27,15 +28,22 @@ namespace EventHandling
             player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
             marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
             bust = new Buff((rnd.Next() % pbMain.Width), (rnd.Next() % pbMain.Height), (rnd.Next() % 361));
+            sh = new Shadow(0, 0, 0);
             player.onOverlap += (p, obj) =>
             {
-                Log.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {(obj is DrawingObjects ? "квадратом очков" : obj is Marker ? "маркером" : "бустером")}\n" + Log.Text;
+                if (obj is Shadow);
+                else
+                {
+                    Log.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {(obj is DrawingObjects ? "квадратом очков" : obj is Marker ? "маркером" : obj is Shadow ? "тенью" : "бустером")}\n" + Log.Text;
+                }
             };
             player.onMarkerOvarlap += (m) =>
             {
                 objects.Remove(m);
                 marker = null;
             };
+            objects.Add(sh);
+            for (int i = 0; i < 3; i++)
             objects.Add(new DrawingObjects(100, 100, 45));
             objects.Add(new DrawingObjects(200, 250, 0));
             objects.Add(bust);
@@ -53,14 +61,15 @@ namespace EventHandling
                 //проверка пересечения границ фигур 
                 if (myObject != player && player.Overlaps(myObject, graph))
                 {
+
                     player.overlap(myObject);
                     myObject.overlap(player);
-                    
+
                     if (myObject is DrawingObjects)
                     {
                         objects.Remove(myObject);
                         var temp = myObject;
-                        temp = new DrawingObjects((rnd.Next()%pbMain.Width),(rnd.Next()%pbMain.Height),(rnd.Next()%361));
+                        temp = new DrawingObjects((rnd.Next() % pbMain.Width), (rnd.Next() % pbMain.Height), (rnd.Next() % 361));
                         scoreCount++;
                         score.Text = scoreCount.ToString();
                         objects.Add(temp);
@@ -72,14 +81,31 @@ namespace EventHandling
                         objects.Remove(bust);
                         objects.Add(bust = new Buff((rnd.Next() % pbMain.Width), (rnd.Next() % pbMain.Height), (rnd.Next() % 361)));
                     }
+                    //
+                }
+                //взаимодействие с тенью
+                if (myObject != sh && sh.Overlaps(myObject, graph)) 
+                {
+                    foreach (var temp in objects.ToArray())
+                    {
+                        if (temp == sh)
+                            continue;
+                        temp.changeColor(temp, Color.White);
+                    }
+                }
+                else
+                {
+                    myObject.returnColor();
                 }
                 graph.Transform = myObject.transformMatrix();
                 myObject.render(graph);
             }
+            //
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            //высчитывание положения игрока
             if (marker != null)
             {
                 float lengthXX = marker.x - player.x;
@@ -101,6 +127,7 @@ namespace EventHandling
                 player.x += player.vX*speed;
                 player.y += player.vY*speed;
             }
+            //
             //таймер для спавна бустера
             bust.timeOfLife -= timer.Interval;
             if (bust.timeOfLife <= 0)
@@ -119,6 +146,15 @@ namespace EventHandling
                     speed = 3;
                     bustTrecker = false;
                 }
+            }
+            //
+            //движение темпой области
+            if (sh.x <= pbMain.Width)
+            {
+                sh.x += timer.Interval - 20;
+            }
+            else{
+                sh.x = -426;
             }
             //
             pbMain.Invalidate();

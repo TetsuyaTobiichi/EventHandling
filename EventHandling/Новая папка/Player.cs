@@ -17,10 +17,8 @@ namespace EventHandling.Новая_папка
 
         public override void render(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Red), -20, -20, 40, 40);
-            g.DrawEllipse(new Pen(Color.Yellow,5), -20, -20, 40, 40);
-            g.DrawEllipse(new Pen(Color.Yellow, 3), -10, -10, 20, 20);
-            g.DrawLine(new Pen(Color.Green, 2), 0, 0, 40, 0);
+            g.FillEllipse(new SolidBrush(color), -20, -20, 40, 40);
+            g.DrawLine(new Pen(Color.Black, 2), 0, 0, 40, 0);
         }
         public override GraphicsPath GetGraphicsPath()
         {
@@ -36,6 +34,9 @@ namespace EventHandling.Новая_папка
                 onMarkerOvarlap(obj as Marker);
             }
         }
-
+        public override void returnColor()
+        {
+            color = Color.Magenta;
+        }
     }
     }

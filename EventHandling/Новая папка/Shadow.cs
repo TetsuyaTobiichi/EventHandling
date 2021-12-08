@@ -8,24 +8,19 @@ using System.Threading.Tasks;
 
 namespace EventHandling.Новая_папка
 {
-    class DrawingObjects:BaseObject
+    class Shadow:BaseObject
     {
-        public DrawingObjects(float x, float y, float angle) : base(x, y, angle) {}
-        
+        public Shadow(float x, float y, float angle) : base(x, y, angle) { }
 
         public override void render(Graphics g)
         {
-            g.FillRectangle(new SolidBrush(color), -25, -15, 50, 30);
+            g.FillRectangle(new SolidBrush(Color.Black), 0, 0, 200, 426);
         }
         public override GraphicsPath GetGraphicsPath()
         {
             var path = base.GetGraphicsPath();
-            path.AddRectangle(new Rectangle(-25,-15,50,30));
+            path.AddRectangle(new Rectangle(0, 0, 200, 426));
             return path;
-        }
-        public override void returnColor()
-        {
-            this.color = Color.Yellow;
         }
     }
 }

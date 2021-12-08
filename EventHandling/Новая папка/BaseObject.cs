@@ -11,6 +11,7 @@ namespace EventHandling.Новая_папка
     class BaseObject
     {
         public float x, y, angle;
+        public Color color = Color.Red;
         public Action<BaseObject, BaseObject> onOverlap;
         public BaseObject(float x,float y,float angle)
         {
@@ -52,6 +53,14 @@ namespace EventHandling.Новая_папка
             {
                 this.onOverlap(this, obj);
             }
+        }
+        public virtual void changeColor(BaseObject obj,Color color)
+        {
+            obj.color = color;
+        }
+        public virtual void returnColor()
+        {
+
         }
     }
 }

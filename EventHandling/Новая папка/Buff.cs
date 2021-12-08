@@ -16,14 +16,17 @@ namespace EventHandling.Новая_папка
         }
         public override void render(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Green), -20, -20, 40, 40);
-            g.DrawEllipse(new Pen(Color.Yellow, 5), -20, -20, 40, 40);
+            g.FillEllipse(new SolidBrush(color), -20, -20, 40, 40);
         }
         public override GraphicsPath GetGraphicsPath()
         {
             var path = base.GetGraphicsPath();
             path.AddRectangle(new Rectangle(-20, -20, 40, 40));
             return path;
+        }
+        public override void returnColor()
+        {
+            color = Color.Green;
         }
     }
 }
